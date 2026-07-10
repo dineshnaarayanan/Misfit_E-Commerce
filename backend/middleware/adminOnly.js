@@ -1,0 +1,16 @@
+/* ═══════════════════════════════════════════════════════════
+   MISFIT — middleware/adminOnly.js
+   Blocks non-admin users from accessing admin routes.
+   Must be used AFTER authMiddleware.
+═══════════════════════════════════════════════════════════ */
+function adminOnly(req, res, next) {
+  if (!req.user || req.user.role !== 'admin') {
+    return res.status(403).json({
+      success: false,
+      message: 'Access denied. Admin privileges required.'
+    });
+  }
+  next();
+}
+
+module.exports = adminOnly;
