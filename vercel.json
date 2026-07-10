@@ -1,0 +1,38 @@
+{
+  "buildCommand": "cd misfit-react && npm run build",
+  "outputDirectory": "misfit-react/dist",
+  "functions": {
+    "backend/api/index.js": {
+      "runtime": "nodejs18.x",
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/backend/api"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ],
+  "env": {
+    "MONGO_URI": "@MONGO_URI",
+    "JWT_SECRET": "@JWT_SECRET",
+    "JWT_EXPIRES_IN": "7d",
+    "GOOGLE_CLIENT_ID": "@GOOGLE_CLIENT_ID",
+    "RAZORPAY_KEY_ID": "@RAZORPAY_KEY_ID",
+    "RAZORPAY_KEY_SECRET": "@RAZORPAY_KEY_SECRET",
+    "ADMIN_SECRET": "@ADMIN_SECRET",
+    "NODE_ENV": "production"
+  }
+}
